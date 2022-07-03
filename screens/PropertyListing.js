@@ -10,6 +10,7 @@ import {
   Platform, Easing, StatusBar
 } from "react-native"
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { ListingCard } from '../components';
 import { COLORS, dummyData, SIZES, theme } from "../constants";
 import images from '../constants/images';
 
@@ -111,6 +112,55 @@ const PropertyListing = ({ ...props }) => {
     mapView.current.animateToRegion(newRegion, 200)
   }
 
+  function AnimatedScrollView() {
+
+    return (
+      <Animated.ScrollView
+        ref={_scrollView}
+        horizontal
+        pagingEnabled
+        scrollEventThrottle={1}
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={CARD_WIDTH + 20}
+        snapToAlignment="center"
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          paddingVertical: 10,
+        }}
+        contentInset={{
+          top: 0,
+          left: SPACING_FOR_CARD_INSET,
+          bottom: 0,
+          right: SPACING_FOR_CARD_INSET
+        }}
+        contentContainerStyle={{
+          paddingHorizontal: Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0
+        }}
+        onScroll={Animated.event(
+          [
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: mapAnimation,
+                }
+              },
+            },
+          ],
+          { useNativeDriver: true }
+        )}
+      >
+        {dummyData.propertyData.map((marker, index) => (
+
+         <ListingCard key={index} marker = {marker}/>
+        ))}
+        
+      </Animated.ScrollView>
+    )
+  }
+
   return (
     <View
       style={{
@@ -178,122 +228,9 @@ const PropertyListing = ({ ...props }) => {
         })}
       </MapView>
 
-      <Animated.ScrollView
-        ref={_scrollView}
-        horizontal
-        pagingEnabled
-        scrollEventThrottle={1}
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={CARD_WIDTH + 20}
-        snapToAlignment="center"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          paddingVertical: 10,
-        }}
-        contentInset={{
-          top: 0,
-          left: SPACING_FOR_CARD_INSET,
-          bottom: 0,
-          right: SPACING_FOR_CARD_INSET
-        }}
-        contentContainerStyle={{
-          paddingHorizontal: Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0
-        }}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  x: mapAnimation,
-                }
-              },
-            },
-          ],
-          { useNativeDriver: true }
-        )}
-      >
-        {dummyData.propertyData.map((marker, index) => (
-          <View key={index}>
+      {/* animated scrollview */}
+      <AnimatedScrollView />
 
-            <Text style={{
-              color: COLORS.gray,
-              fontSize: 14,
-              lineHeight: 18,
-              textAlign: 'center',
-              marginHorizontal: 10,
-            }}>{marker.type.toUpperCase()}</Text>
-
-            <View
-              style={{
-                elevation: 2,
-                backgroundColor: 'transaparent',
-                borderRadius: 8,
-                marginHorizontal: 10,
-                shadowColor: "#000",
-                // shadowRadius: 5,
-                //shadowOpacity: 0.3,
-                //shadowOffset: { x: 2, y: -2 },
-                overflow: "hidden",
-              }}
-            >
-
-              <Image
-                source={marker?.avatar}
-                style={{
-                  //flex: 3,
-                  width: SIZES.width * 0.45,
-                  height: SIZES.height * 0.33,
-                  alignSelf: "center",
-                  borderRadius: 8,
-                  marginTop: 10,
-                }}
-                resizeMode="cover" />
-
-              <View style={{ flexDirection: 'row', marginHorizontal: SIZES.radius * 0.25 }}>
-
-                <View
-                  style={{
-
-                    position: 'absolute',
-                    bottom: 5,
-                    marginHorizontal: 2,
-                    // height: 25,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 5,
-                    backgroundColor: "#FF2D55"
-                  }}>
-                  <Text style={{ color: '#FFFFFF', fontSize: 16, lineHeight: 25, textAlign: 'center', marginHorizontal: 10, fontWeight: '700' }}>{`KES ${marker?.price}`}</Text>
-                  {/* <Text style={{ color: '#FFFFFF', fontSize: 16, textAlign: 'center', marginHorizontal: 10, fontWeight: '700' }}>{`Ksh.${NUMBER_WITH_COMMAS(marker.price)}`}</Text> */}
-
-                </View>
-
-              </View>
-              {/* <View style={styles.textContent}>
-              <Text numberOfLines={1} style={styles.cardtitle}>{marker.property_name}</Text>
-              <Text style={styles.cardtitle}>{`${marker.bathrooms}ba|${marker.bedrooms}bd|${marker.floor_area} ${'SQft'}`}</Text>
-
-            </View> */}
-            </View>
-
-            <Text style={{
-              color: COLORS.white,
-              width: SIZES.width * 0.45,
-              fontSize: 16,
-              lineHeight: 20,
-              textAlign: 'left',
-              marginHorizontal: 10,
-              marginTop: SIZES.radius * 0.24
-            }}
-              numberOfLines={3}
-            >{marker?.description}</Text>
-          </View>
-
-        ))}
-      </Animated.ScrollView>
     </View>
   )
 
