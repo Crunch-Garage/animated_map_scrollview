@@ -480,7 +480,8 @@ export const COLORS = {
   red: '#CC0000',
   red2: '#F10000',
   error: '#FF0000',
-  green: '#4CAF50'
+  green: '#4CAF50',
+  purple: '"rgba(130,4,150, 0.9)"'
 };
 
 export const FONTS = {
