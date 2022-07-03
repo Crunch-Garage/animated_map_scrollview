@@ -152,11 +152,17 @@ const PropertyListing = ({ ...props }) => {
           { useNativeDriver: true }
         )}
       >
-        {dummyData.propertyData.map((marker, index) => (
 
-         <ListingCard key={index} marker = {marker}/>
-        ))}
-        
+
+        {dummyData.propertyData.map((marker, index) => {
+
+          return (
+            <ListingCard
+              key={index}
+              marker={marker} />
+          )
+        })}
+
       </Animated.ScrollView>
     )
   }

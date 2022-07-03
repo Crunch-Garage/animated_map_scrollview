@@ -4,11 +4,12 @@ import {
   Image,
 } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants";
+import { convertNumber } from "../utils/helper";
 
 
 const ListingCard = ({ ...props }) => {
 
-  const { marker } = props;
+  const { marker} = props;
 
   return (
     <View>
@@ -19,7 +20,7 @@ const ListingCard = ({ ...props }) => {
         fontSize: 14,
         lineHeight: 18,
         marginHorizontal: 10,
-      }}>{marker.type.toUpperCase()}</Text>
+      }}>{marker?.type.toUpperCase()}</Text>
 
       <View
         style={{
@@ -40,7 +41,7 @@ const ListingCard = ({ ...props }) => {
           source={marker?.avatar}
           style={{
             width: SIZES.width * 0.45,
-            height: SIZES.height * 0.33,
+            height:SIZES.height * 0.33,
             alignSelf: "center",
             borderRadius: 8,
           }}
@@ -65,9 +66,10 @@ const ListingCard = ({ ...props }) => {
                 color: '#FFFFFF',
                 fontSize: 16,
                 lineHeight: 22,
+                padding:SIZES.radius *0.125,
                 textAlign: 'center',
                 marginHorizontal: 10
-              }}>{`KES ${marker?.price}`}</Text>
+              }}>{`KES ${convertNumber(marker?.price)}`}</Text>
 
           </View>
 
