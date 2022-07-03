@@ -2,7 +2,7 @@
 import { PropertyListing } from './screens';
 
 export default function App() {
-  return (
+  return ( 
     <PropertyListing/> 
   );
 }
