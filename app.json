@@ -27,7 +27,7 @@
       },
       "package": "com.crunchgarage.realestate", 
       "config": {
-        "googleMaps": { "apiKey": "AIzaSyDUE_V4IbFnO6y-t1h6kARfT2S5Kx98T8s" }   
+        "googleMaps": { "apiKey": "" }   
      }
     },
     "web": {
