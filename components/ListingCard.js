@@ -55,7 +55,6 @@ const ListingCard = ({...props}) => {
                 position: 'absolute',
                 bottom: 5,
                 marginHorizontal: 2,
-                // height: 25,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 5,
