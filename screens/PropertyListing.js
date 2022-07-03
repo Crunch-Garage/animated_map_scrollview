@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
 import {
-  SafeAreaView,
   View,
   Text,
   Animated,
@@ -9,11 +8,9 @@ import {
   Dimensions,
   Platform, Easing, StatusBar
 } from "react-native"
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { ListingCard } from '../components';
-import { COLORS, dummyData, SIZES, theme } from "../constants";
-import images from '../constants/images';
-
+import MapView from 'react-native-maps';
+import { ListingCard, MarkerRing } from '../components';
+import { dummyData, SIZES, theme } from "../constants";
 
 const CARD_WIDTH = SIZES.width * 0.8;
 const SPACING_FOR_CARD_INSET = SIZES.width * 0.1 - 10;
@@ -72,7 +69,7 @@ const PropertyListing = ({ ...props }) => {
     });
 
     if (region !== null) {
-      // zoomIn()
+     zoomIn()
     }
 
     //zoomIn()
@@ -87,7 +84,7 @@ const PropertyListing = ({ ...props }) => {
     ];
     const scale = mapAnimation.interpolate({
       inputRange,
-      outputRange: [10, 15, 10],
+      outputRange: [1, 1.5, 1],
       extrapolate: "clamp",
     });
     const opacity = mapAnimation.interpolate({
@@ -167,15 +164,8 @@ const PropertyListing = ({ ...props }) => {
     )
   }
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-
+  function ListingMapView() {
+    return (
       <MapView
         style={{
           height: SIZES.height,
@@ -198,41 +188,32 @@ const PropertyListing = ({ ...props }) => {
             opacity: interpolations[index].opacity,
           };
 
-          const coords = {
-            latitude: marker.location.latitude,
-            longitude: marker.location.longitude
-          };
-
           return (
-            <MapView.Marker key={index} coordinate={coords}>
-              <Animated.View
-                style={[{
-                  alignItems: "center",
-                  justifyContent: "center",
-                }, opacityStyle]}
-              >
-                <Animated.View
-                  style={[{
-                    width: 30,
-                    height: 30,
-                    borderRadius: 12,
-                    backgroundColor: "rgba(130,4,150, 0.3)",
-                    position: "absolute",
-                    borderWidth: 1,
-                    borderColor: "rgba(130,4,150, 0.5)",
-                  }, scaleStyle]} />
-                <View style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 4,
-                  backgroundColor: "rgba(130,4,150, 0.9)",
-                }} />
-              </Animated.View>
-            </MapView.Marker>
+            <MarkerRing
+              key={index}
+              marker={marker}
+              scaleStyle={scaleStyle}
+              opacityStyle={opacityStyle}
+            />
           )
 
         })}
       </MapView>
+    )
+  }
+
+  
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+
+      {/* map view */}
+      {ListingMapView()}
 
       {/* animated scrollview */}
       <AnimatedScrollView />
