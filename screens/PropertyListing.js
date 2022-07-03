@@ -286,7 +286,7 @@ const PropertyListing = ({ ...props }) => {
               lineHeight: 20,
               textAlign: 'left',
               marginHorizontal: 10,
-              marginTop: SIZES.radius * 0.25
+              marginTop: SIZES.radius * 0.24
             }}
               numberOfLines={3}
             >{marker?.description}</Text>
