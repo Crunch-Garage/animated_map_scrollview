@@ -483,11 +483,22 @@ export const COLORS = {
   green: '#4CAF50'
 };
 
+export const FONTS = {
+  boldFont: {fontFamily: "Poppins-Bold"},
+  semiBoldFont:{fontFamily: "Poppins-SemiBold"},
+  regularFont:{fontFamily: "Poppins-Regular"},
+  thinFont:{fontFamily: "Poppins-Thin"},
+  lightFont:{fontFamily: "Poppins-Light"},
+  extraLightFont:{fontFamily: "Poppins-ExtraLight"},
+
+};
+
 const theme = {
     MAP_DARK_THEME,
     MAP_SEMI_DARK_THEME,
     SIZES,
-    COLORS
+    COLORS,
+    FONTS
 }
 
 export default theme;
